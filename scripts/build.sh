@@ -4,8 +4,8 @@ set -e
 cd "$(dirname "$0")/.."
 mkdir -p public/build
 
-# 1. esbuild (Go binary, low memory)
-npx esbuild resources/js/app.jsx --bundle --outfile=public/build/app.js --format=esm --jsx=automatic --minify --target=es2020
+# 1. esbuild (Go binary, low memory) — run directly, no npx
+./node_modules/.bin/esbuild resources/js/app.jsx --bundle --outfile=public/build/app.js --format=esm --jsx=automatic --minify --target=es2020
 
 # 2. Tailwind: use standalone binary on Linux (avoids Node OOM)
 TAILWIND_BIN="scripts/tailwindcss-linux-x64"
