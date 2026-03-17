@@ -20,7 +20,7 @@ else
   echo "Using existing app.css (skipped Tailwind build)"
 fi
 
-# 3. Manifest
-echo '{"resources/css/app.css":{"file":"app.css"},"resources/js/app.jsx":{"file":"app.js"}}' > public/build/manifest.json
+# 3. Manifest (Vite.php expects 'src' for preloads)
+echo '{"resources/css/app.css":{"src":"resources/css/app.css","file":"app.css"},"resources/js/app.jsx":{"src":"resources/js/app.jsx","file":"app.js"}}' > public/build/manifest.json
 
 echo "Build done: public/build/"
