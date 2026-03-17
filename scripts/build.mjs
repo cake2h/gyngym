@@ -30,10 +30,10 @@ execSync(
   { cwd: root, stdio: 'inherit' }
 );
 
-// 3. Laravel manifest
+// 3. Laravel manifest (Vite.php expects 'src' for preloads)
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify({
-  'resources/css/app.css': { file: 'app.css' },
-  'resources/js/app.jsx': { file: 'app.js' },
+  'resources/css/app.css': { src: 'resources/css/app.css', file: 'app.css' },
+  'resources/js/app.jsx': { src: 'resources/js/app.jsx', file: 'app.js' },
 }));
 
 console.log('Build done: public/build/');
