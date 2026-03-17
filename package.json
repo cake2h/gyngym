@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:lowmem": "bash scripts/build.sh",
     "dev": "npm run build"
   },
   "dependencies": {

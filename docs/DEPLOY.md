@@ -11,7 +11,11 @@ npm run build
 ```
 Результат: `public/build/` — app.js, app.css, manifest.json.
 
-**На сервере** (Node 20 через nvm): `npm install` и `npm run build` должны проходить при ограниченной RAM.
+**На сервере при OOM** — использовать standalone Tailwind (без Node для CSS):
+```bash
+chmod +x scripts/build.sh
+npm run build:lowmem
+```
 
 ### 2. Оптимизация для продакшена
 ```bash

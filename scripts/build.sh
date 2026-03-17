@@ -1,0 +1,22 @@
+#!/bin/bash
+# Build for low-memory servers: esbuild binary + Tailwind standalone (no Node for CSS)
+set -e
+cd "$(dirname "$0")/.."
+mkdir -p public/build
+
+# 1. esbuild (Go binary, low memory)
+npx esbuild resources/js/app.jsx --bundle --outfile=public/build/app.js --format=esm --jsx=automatic --minify --target=es2020
+
+# 2. Tailwind: use standalone binary on Linux (avoids Node OOM)
+TAILWIND_BIN="scripts/tailwindcss-linux-x64"
+if [ ! -f "$TAILWIND_BIN" ]; then
+  echo "Downloading Tailwind standalone..."
+  curl -sL "https://github.com/tailwindlabs/tailwindcss/releases/download/v4.2.1/tailwindcss-linux-x64" -o "$TAILWIND_BIN"
+  chmod +x "$TAILWIND_BIN"
+fi
+"$TAILWIND_BIN" -i resources/css/app.css -o public/build/app.css --minify
+
+# 3. Manifest
+echo '{"resources/css/app.css":{"file":"app.css"},"resources/js/app.jsx":{"file":"app.js"}}' > public/build/manifest.json
+
+echo "Build done: public/build/"
