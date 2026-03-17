@@ -14,7 +14,8 @@ if [ ! -f "$TAILWIND_BIN" ]; then
   curl -sL "https://github.com/tailwindlabs/tailwindcss/releases/download/v4.2.1/tailwindcss-linux-x64" -o "$TAILWIND_BIN"
   chmod +x "$TAILWIND_BIN"
 fi
-"$TAILWIND_BIN" -i resources/css/app.css -o public/build/app.css --minify
+# RAYON_NUM_THREADS=1 — ограничивает потоки (avoids "Resource temporarily unavailable")
+RAYON_NUM_THREADS=1 "$TAILWIND_BIN" -i resources/css/app.css -o public/build/app.css --minify
 
 # 3. Manifest
 echo '{"resources/css/app.css":{"file":"app.css"},"resources/js/app.jsx":{"file":"app.js"}}' > public/build/manifest.json
