@@ -35,20 +35,9 @@ php artisan view:cache
 - Загрузить проект в `/www/gyngym.ru/` (все файлы Laravel: app, config, public, routes и т.д.)
 
 ### 3. Корневая директория сайта
-Корень сайта: `/www/gyngym.ru`
+Корень сайта: `/www/gyngym.ru` (менять нельзя).
 
-В настройках домена **обязательно** указать:
-```
-/www/gyngym.ru/public
-```
-Иначе Laravel не заработает (доступ к .env, vendor — небезопасно).
-
-Если панель не даёт сменить корень — в `/www/gyngym.ru/` положить `.htaccess`:
-```apache
-RewriteEngine On
-RewriteCond %{REQUEST_URI} !^/public/
-RewriteRule ^(.*)$ public/$1 [L,QSA]
-```
+В корне проекта уже есть `.htaccess` — он перенаправляет все запросы в `public/`. Laravel будет работать, `.env` и `vendor` останутся недоступны.
 
 ### 4. Файл .env
 Создать на сервере `.env` (скопировать из `.env.example`):
@@ -135,5 +124,5 @@ php artisan route:cache
 |----------|----------|
 | PHP | 8.2+ (reg.ru: до 8.4) |
 | Расширения | pdo_mysql, mbstring, openssl, fileinfo, json, tokenizer |
-| Document root | `public/` |
+| Document root | `/www/gyngym.ru` (через .htaccess → public/) |
 | APP_URL | Точный URL сайта (с https) |
