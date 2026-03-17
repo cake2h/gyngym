@@ -3,10 +3,15 @@
 ## Подготовка (локально)
 
 ### 1. Сборка фронтенда
+Сборка через **esbuild + Tailwind** (вместо Vite) — меньше памяти (~100 пакетов вместо 370+).
+
 ```bash
+npm install
 npm run build
 ```
-Результат: `public/build/` — JS, CSS, manifest, sw.js.
+Результат: `public/build/` — app.js, app.css, manifest.json.
+
+**На сервере** (Node 20 через nvm): `npm install` и `npm run build` должны проходить при ограниченной RAM.
 
 ### 2. Оптимизация для продакшена
 ```bash
