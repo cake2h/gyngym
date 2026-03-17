@@ -1,11 +1,11 @@
 #!/bin/bash
-# Build for low-memory servers: esbuild binary + Tailwind standalone (no Node for CSS)
+# Build for restricted shared hosting (low memory, ulimit on processes)
 set -e
 cd "$(dirname "$0")/.."
 mkdir -p public/build
 
-# 1. esbuild (Go binary, low memory) — run directly, no npx
-./node_modules/.bin/esbuild resources/js/app.jsx --bundle --outfile=public/build/app.js --format=esm --jsx=automatic --minify --target=es2020
+# 1. esbuild — GOMAXPROCS=1 limits threads (avoids "failed to create new OS thread")
+GOMAXPROCS=1 ./node_modules/.bin/esbuild resources/js/app.jsx --bundle --outfile=public/build/app.js --format=esm --jsx=automatic --minify --target=es2020
 
 # 2. Tailwind: use standalone binary on Linux (avoids Node OOM)
 TAILWIND_BIN="scripts/tailwindcss-linux-x64"

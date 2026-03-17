@@ -11,11 +11,11 @@ npm run build
 ```
 Результат: `public/build/` — app.js, app.css, manifest.json.
 
-**На сервере при OOM** — использовать standalone Tailwind (без Node для CSS):
-```bash
-chmod +x scripts/build.sh
-npm run build:lowmem
-```
+**На сервере** (OOM или ulimit) — `npm run build:lowmem`:
+- GOMAXPROCS=1 — ограничивает потоки esbuild
+- Tailwind standalone — без Node для CSS
+
+Если ошибка «failed to create new OS thread» — попросить поддержку reg.ru увеличить `ulimit -u`.
 
 ### 2. Оптимизация для продакшена
 ```bash
