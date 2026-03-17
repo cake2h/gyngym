@@ -16,7 +16,7 @@ const TYPE_LABELS = {
 export default function Profile() {
   const { user, updateUser, logout } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', age: '', weight: '', gender: 'male' });
+  const [form, setForm] = useState({ name: '', birth_date: '', weight: '', gender: 'male' });
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -24,7 +24,7 @@ export default function Profile() {
     if (user) {
       setForm({
         name: user.name || '',
-        age: user.age?.toString() || '',
+        birth_date: user.birth_date ? user.birth_date.split('T')[0] : '',
         weight: user.weight?.toString() || '',
         gender: user.gender || 'male',
       });
@@ -38,7 +38,7 @@ export default function Profile() {
     try {
       const { data } = await api.put('/profile', {
         ...form,
-        age: form.age ? parseInt(form.age) : null,
+        birth_date: form.birth_date || null,
         weight: form.weight ? parseFloat(form.weight) : null,
       });
       updateUser(data);
@@ -69,13 +69,12 @@ export default function Profile() {
           />
         </div>
         <div>
-          <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1">Возраст</label>
+          <label className="block text-sm text-slate-600 dark:text-slate-400 mb-1">Дата рождения</label>
           <input
-            type="number"
-            value={form.age}
-            onChange={(e) => setForm({ ...form, age: e.target.value })}
-            min="1"
-            max="150"
+            type="date"
+            value={form.birth_date}
+            onChange={(e) => setForm({ ...form, birth_date: e.target.value })}
+            max={new Date().toISOString().split('T')[0]}
             className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
           />
         </div>

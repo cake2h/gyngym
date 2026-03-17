@@ -4,7 +4,7 @@ import api from '../api';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function RegisterStep2() {
-  const [form, setForm] = useState({ name: '', age: '', weight: '', gender: 'male', password: '', password_confirmation: '' });
+  const [form, setForm] = useState({ name: '', birth_date: '', weight: '', gender: 'male', password: '', password_confirmation: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,12 +41,10 @@ export default function RegisterStep2() {
             required
           />
           <input
-            type="number"
-            value={form.age}
-            onChange={(e) => setForm({ ...form, age: e.target.value })}
-            placeholder="Возраст"
-            min="1"
-            max="150"
+            type="date"
+            value={form.birth_date}
+            onChange={(e) => setForm({ ...form, birth_date: e.target.value })}
+            max={new Date().toISOString().split('T')[0]}
             className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500"
             required
           />

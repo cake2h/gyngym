@@ -17,7 +17,7 @@ class ProfileController extends Controller
     {
         $validated = $request->validate([
             'name' => ['sometimes', 'string', 'max:255'],
-            'age' => ['sometimes', 'integer', 'min:1', 'max:150'],
+            'birth_date' => ['sometimes', 'date', 'before:today', 'after:' . now()->subYears(120)->format('Y-m-d')],
             'weight' => ['sometimes', 'numeric', 'min:20', 'max:300'],
             'gender' => ['sometimes', 'in:male,female'],
         ]);

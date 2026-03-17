@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'age' => ['required', 'integer', 'min:1', 'max:150'],
+            'birth_date' => ['required', 'date', 'before:today', 'after:' . now()->subYears(120)->format('Y-m-d')],
             'weight' => ['required', 'numeric', 'min:20', 'max:300'],
             'gender' => ['required', 'in:male,female'],
             'password' => ['required', 'confirmed', Password::defaults()],
@@ -45,7 +45,7 @@ class AuthController extends Controller
         $user = $request->user();
         $user->update([
             'name' => $validated['name'],
-            'age' => $validated['age'],
+            'birth_date' => $validated['birth_date'],
             'weight' => $validated['weight'],
             'gender' => $validated['gender'],
             'password' => Hash::make($validated['password']),
